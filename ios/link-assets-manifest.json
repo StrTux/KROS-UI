@@ -1,0 +1,49 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "_li/_as/_fo/LexendDeca-Black.ttf",
+      "sha1": "a86262a5c1f7d14134fb4ff839b0131a94b444ea"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-Bold.ttf",
+      "sha1": "e104ea217520eac2deafd9e17a7142bc3d34a994"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-ExtraBold.ttf",
+      "sha1": "29303b202c7ec3f98bb0d556021ece3fc341c97b"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-ExtraLight.ttf",
+      "sha1": "f501b405215c7225abbc19a5487e32f76cdaf236"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-Light.ttf",
+      "sha1": "1d53f9c26202a2197d037021a0613fd70f1bc24b"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-Medium.ttf",
+      "sha1": "99aabd50ff0527c066a3c64b253b2ddeec643f8f"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-Regular.ttf",
+      "sha1": "6f49970e1777a4f736e745311df319a58c5cf144"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-SemiBold.ttf",
+      "sha1": "60141a9b4161683af73e7c67820757207f2fc76d"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-Thin.ttf",
+      "sha1": "3b4274260dfe28c44f4cb94efbdb4d8917d28752"
+    },
+    {
+      "path": "_li/_as/_fo/LexendDeca-VariableFont_wght.ttf",
+      "sha1": "834220650f899ff0a288ab1c5d8ce5ee9a93b23b"
+    },
+    {
+      "path": "_li/_as/_fo/uicons-regular-rounded-J3WOUERV.ttf",
+      "sha1": "e164d505b8089d0c45711182c5c96b33a12fbee0"
+    }
+  ]
+}
