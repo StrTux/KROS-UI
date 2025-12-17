@@ -12,25 +12,28 @@ import { renderFlaticon } from '../../functions/iconUtils';
  */
 export const Calendar = ({ selected, onSelect, className = '' }) => {
     const [currentDate, setCurrentDate] = useState(selected || new Date());
+    const [view, setView] = useState('days'); // 'days', 'months', 'years'
+    const [yearRangeStart, setYearRangeStart] = useState(new Date().getFullYear() - 6);
 
-    const getDaysInMonth = (date) => {
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        return new Date(year, month + 1, 0).getDate();
+    // Helpers
+    const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+
+    // Navigation Handlers
+    const handlePrev = () => {
+        if (view === 'days') {
+            setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+        } else if (view === 'years') {
+            setYearRangeStart(yearRangeStart - 12);
+        }
     };
 
-    const getFirstDayOfMonth = (date) => {
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        return new Date(year, month, 1).getDay();
-    };
-
-    const handlePrevMonth = () => {
-        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-    };
-
-    const handleNextMonth = () => {
-        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    const handleNext = () => {
+        if (view === 'days') {
+            setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+        } else if (view === 'years') {
+            setYearRangeStart(yearRangeStart + 12);
+        }
     };
 
     const handleDateClick = (day) => {
@@ -38,24 +41,111 @@ export const Calendar = ({ selected, onSelect, className = '' }) => {
         onSelect?.(newDate);
     };
 
+    const handleMonthSelect = (monthIndex) => {
+        const newDate = new Date(currentDate.getFullYear(), monthIndex, 1);
+        setCurrentDate(newDate);
+        setView('days');
+    };
+
+    const handleYearSelect = (year) => {
+        const newDate = new Date(year, currentDate.getMonth(), 1);
+        setCurrentDate(newDate);
+        setView('days'); // Or 'months' if you prefer drilling down
+    };
+
+    // Renderers
     const renderHeader = () => (
         <View style={applyTw('flex-row items-center justify-between mb-4')}>
-            <TouchableOpacity onPress={handlePrevMonth} style={applyTw('p-2')}>
+            <TouchableOpacity onPress={handlePrev} style={applyTw('p-2')}>
                 {renderFlaticon('fi fi-rr-angle-small-left', { size: 20, color: '#fff' })}
             </TouchableOpacity>
-            <Text style={applyTw('text-white text-base font-semibold')}>
-                {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-            </Text>
-            <TouchableOpacity onPress={handleNextMonth} style={applyTw('p-2')}>
+
+            <View style={applyTw('flex-row gap-2')}>
+                <TouchableOpacity
+                    onPress={() => setView('months')}
+                    style={applyTw(`px-3 py-1 rounded-md ${view === 'months' ? 'bg-[#333]' : ''}`)}
+                >
+                    <Text style={applyTw('text-white text-base font-semibold')}>
+                        {currentDate.toLocaleDateString('en-US', { month: 'long' })}
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        setView('years');
+                        setYearRangeStart(currentDate.getFullYear() - 6);
+                    }}
+                    style={applyTw(`px-3 py-1 rounded-md ${view === 'years' ? 'bg-[#333]' : ''}`)}
+                >
+                    <Text style={applyTw('text-white text-base font-semibold')}>
+                        {currentDate.getFullYear()}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity onPress={handleNext} style={applyTw('p-2')}>
                 {renderFlaticon('fi fi-rr-angle-small-right', { size: 20, color: '#fff' })}
             </TouchableOpacity>
         </View>
     );
 
+    const renderMonths = () => {
+        const months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+        return (
+            <View style={applyTw('flex-row flex-wrap justify-between')}>
+                {months.map((month, index) => {
+                    const isSelected = currentDate.getMonth() === index;
+                    return (
+                        <TouchableOpacity
+                            key={month}
+                            style={applyTw(`w-[30%] py-3 mb-2 items-center rounded-lg ${isSelected ? 'bg-blue-600' : 'bg-[#222]'}`)}
+                            onPress={() => handleMonthSelect(index)}
+                        >
+                            <Text style={applyTw(`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-300'}`)}>
+                                {month}
+                            </Text>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
+        );
+    };
+
+    const renderYears = () => {
+        const years = Array.from({ length: 12 }, (_, i) => yearRangeStart + i);
+        return (
+            <View style={applyTw('flex-row flex-wrap justify-between')}>
+                {years.map((year) => {
+                    const isSelected = currentDate.getFullYear() === year;
+                    return (
+                        <TouchableOpacity
+                            key={year}
+                            style={applyTw(`w-[30%] py-3 mb-2 items-center rounded-lg ${isSelected ? 'bg-blue-600' : 'bg-[#222]'}`)}
+                            onPress={() => handleYearSelect(year)}
+                        >
+                            <Text style={applyTw(`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-300'}`)}>
+                                {year}
+                            </Text>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
+        );
+    };
+
     const renderDays = () => {
         const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-        return (
-            <View style={applyTw('flex-row justify-between mb-2')}>
+        const daysInMonth = getDaysInMonth(currentDate);
+        const firstDay = getFirstDayOfMonth(currentDate);
+        const rows = [];
+        let cells = [];
+
+        // Header Days
+        const header = (
+            <View style={applyTw('flex-row justify-between mb-2')} key="header">
                 {days.map(day => (
                     <Text key={day} style={applyTw('text-gray-500 text-xs w-8 text-center')}>
                         {day}
@@ -63,19 +153,13 @@ export const Calendar = ({ selected, onSelect, className = '' }) => {
                 ))}
             </View>
         );
-    };
 
-    const renderCells = () => {
-        const daysInMonth = getDaysInMonth(currentDate);
-        const firstDay = getFirstDayOfMonth(currentDate);
-        const rows = [];
-        let cells = [];
-
-        // Empty cells for days before start of month
+        // Empty cells
         for (let i = 0; i < firstDay; i++) {
             cells.push(<View key={`empty-${i}`} style={applyTw('w-8 h-8')} />);
         }
 
+        // Day cells
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
             const isSelected = selected && date.toDateString() === selected.toDateString();
@@ -109,21 +193,26 @@ export const Calendar = ({ selected, onSelect, className = '' }) => {
         }
 
         if (cells.length > 0) {
-            // Fill remaining cells to keep alignment if needed, or just push row
             while (cells.length < 7) {
                 cells.push(<View key={`empty-end-${cells.length}`} style={applyTw('w-8 h-8')} />);
             }
             rows.push(<View key={rows.length} style={applyTw('flex-row justify-between mb-1')}>{cells}</View>);
         }
 
-        return <View>{rows}</View>;
+        return (
+            <View>
+                {header}
+                {rows}
+            </View>
+        );
     };
 
     return (
         <View style={[applyTw('p-3 bg-[#111] rounded-lg border border-[#333]'), className]}>
             {renderHeader()}
-            {renderDays()}
-            {renderCells()}
+            {view === 'days' && renderDays()}
+            {view === 'months' && renderMonths()}
+            {view === 'years' && renderYears()}
         </View>
     );
 };

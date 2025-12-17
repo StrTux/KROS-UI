@@ -1,78 +1,134 @@
-import React, { useState, useRef } from 'react';
-import { View, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+    withTiming,
+    interpolate,
+    Extrapolate,
+    runOnJS,
+    FadeInDown,
+    FadeOutUp,
+} from 'react-native-reanimated';
 import { applyTw } from '../../style/style';
-import { Text } from './text';
+import { renderFlaticon } from '../../functions/iconUtils';
 
-/**
- * Carousel Component for React Native
- * Horizontal scrollable carousel with indicators
- */
+const { width } = Dimensions.get('window');
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CARD_WIDTH = SCREEN_WIDTH - 80;
+// ==================== ANIMATED TESTIMONIALS COMPONENT ====================
 
-export const Carousel = ({ items, renderItem, className = '' }) => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const scrollViewRef = useRef(null);
+const TestimonialCard = ({ item, index, activeIndex, totalLength }) => {
+    const isActive = index === activeIndex;
 
-    const handleScroll = (event) => {
-        const scrollPosition = event.nativeEvent.contentOffset.x;
-        const index = Math.round(scrollPosition / CARD_WIDTH);
-        setActiveIndex(index);
-    };
+    // Use shared values for scale and opacity only (no rotation to avoid worklet issues)
+    const scale = useSharedValue(isActive ? 1 : 0.95);
+    const opacity = useSharedValue(isActive ? 1 : 0.7);
 
-    const scrollToIndex = (index) => {
-        scrollViewRef.current?.scrollTo({
-            x: index * CARD_WIDTH,
-            animated: true,
-        });
-        setActiveIndex(index);
-    };
+    // Update shared values when active state changes
+    React.useEffect(() => {
+        scale.value = withSpring(isActive ? 1 : 0.95, { damping: 15, stiffness: 80 });
+        opacity.value = withSpring(isActive ? 1 : 0.7, { damping: 15 });
+    }, [isActive]);
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: scale.value }],
+            opacity: opacity.value,
+        };
+    });
+
+    // Calculate static position offset for stacking effect
+    const offset = isActive ? 0 : (index - activeIndex) * 5;
 
     return (
-        <View style={applyTw(`${className}`)}>
-            <ScrollView
-                ref={scrollViewRef}
-                horizontal
-                pagingEnabled={false}
-                showsHorizontalScrollIndicator={false}
-                onScroll={handleScroll}
-                scrollEventThrottle={16}
-                snapToInterval={CARD_WIDTH + 16}
-                decelerationRate="fast"
-                contentContainerStyle={applyTw('px-4')}
-            >
-                {items.map((item, index) => (
-                    <View
-                        key={index}
-                        style={[
-                            applyTw('m-2 p-5'),
-                            { width: CARD_WIDTH }
-                        ]}
-                    >
-                        {renderItem(item, index)}
-                    </View>
-                ))}
-            </ScrollView>
+        <Animated.View
+            style={[
+                applyTw('absolute w-[300px] h-[300px] rounded-3xl overflow-hidden border border-[#333] bg-[#111]'),
+                animatedStyle,
+                {
+                    left: (width - 32 - 300) / 2,
+                    zIndex: isActive ? 100 : totalLength - index,
+                }
+            ]}
+        >
+            <Image
+                source={{ uri: item.src }}
+                style={applyTw('w-full h-full')}
+                resizeMode="cover"
+            />
+        </Animated.View>
+    );
+};
 
-            {/* Indicators */}
-            <View style={applyTw('flex-row justify-center items-center mt-4 gap-2')}>
-                {items.map((_, index) => (
+export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
+    const [active, setActive] = useState(0);
+
+    const handleNext = () => {
+        setActive((prev) => (prev + 1) % testimonials.length);
+    };
+
+    const handlePrev = () => {
+        setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    };
+
+    useEffect(() => {
+        if (autoplay) {
+            const interval = setInterval(handleNext, 5000);
+            return () => clearInterval(interval);
+        }
+    }, [autoplay]);
+
+    const activeTestimonial = testimonials[active];
+
+    return (
+        <View style={applyTw('flex-1 py-10 px-4 items-center')}>
+            {/* Cards Container */}
+            <View style={applyTw('h-[320px] w-full justify-center items-center')}>
+                {testimonials.map((item, index) => (
+                    <TestimonialCard
+                        key={item.src}
+                        item={item}
+                        index={index}
+                        activeIndex={active}
+                        totalLength={testimonials.length}
+                    />
+                ))}
+            </View>
+
+            {/* Text Content */}
+            <View style={applyTw('w-full mt-8 px-4')}>
+                <View key={active}>
+                    <Text style={applyTw('text-2xl font-bold text-white mb-1')}>
+                        {activeTestimonial.name}
+                    </Text>
+                    <Text style={applyTw('text-sm text-gray-500 mb-6')}>
+                        {activeTestimonial.designation}
+                    </Text>
+
+                    <Text style={applyTw('text-lg text-gray-300 leading-7')}>
+                        "{activeTestimonial.quote}"
+                    </Text>
+                </View>
+
+                {/* Navigation Buttons */}
+                <View style={applyTw('flex-row gap-4 mt-8')}>
                     <TouchableOpacity
-                        key={index}
-                        onPress={() => scrollToIndex(index)}
+                        onPress={handlePrev}
+                        style={applyTw('w-12 h-12 rounded-full bg-[#222] items-center justify-center border border-[#333]')}
                         activeOpacity={0.7}
                     >
-                        <View
-                            style={applyTw(
-                                `h-2 rounded-full ${index === activeIndex
-                                    ? 'w-8 bg-white'
-                                    : 'w-2 bg-gray-600'
-                                }`
-                            )}
-                        />
+                        {renderFlaticon('fi fi-rr-arrow-small-left', { size: 24, color: '#fff' })}
                     </TouchableOpacity>
-                ))}
+
+                    <TouchableOpacity
+                        onPress={handleNext}
+                        style={applyTw('w-12 h-12 rounded-full bg-[#222] items-center justify-center border border-[#333]')}
+                        activeOpacity={0.7}
+                    >
+                        {renderFlaticon('fi fi-rr-arrow-small-right', { size: 24, color: '#fff' })}
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -81,178 +137,48 @@ export const Carousel = ({ items, renderItem, className = '' }) => {
 // ==================== DEMO COMPONENT ====================
 
 export const CarouselDemo = () => {
-    const carouselItems = [
+    const testimonials = [
         {
-            title: 'First Slide',
-            description: 'This is the first slide of the carousel',
-            color: 'bg-blue-600',
-            emoji: '🎨',
+            quote:
+                "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
+            name: "Sarah Chen",
+            designation: "Product Manager at TechFlow",
+            src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         },
         {
-            title: 'Second Slide',
-            description: 'This is the second slide with different content',
-            color: 'bg-purple-600',
-            emoji: '🚀',
+            quote:
+                "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
+            name: "Michael Rodriguez",
+            designation: "CTO at InnovateSphere",
+            src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         },
         {
-            title: 'Third Slide',
-            description: 'This is the third and final slide',
-            color: 'bg-pink-600',
-            emoji: '⭐',
+            quote:
+                "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
+            name: "Emily Watson",
+            designation: "Operations Director at CloudScale",
+            src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+            quote:
+                "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
+            name: "James Kim",
+            designation: "Engineering Lead at DataPro",
+            src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+            quote:
+                "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
+            name: "Lisa Thompson",
+            designation: "VP of Technology at FutureNet",
+            src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         },
     ];
-
-    const productItems = [
-        { name: 'Product 1', price: '$99', rating: '4.5' },
-        { name: 'Product 2', price: '$149', rating: '4.8' },
-        { name: 'Product 3', price: '$199', rating: '4.9' },
-        { name: 'Product 4', price: '$79', rating: '4.3' },
-    ];
-
-    const renderCarouselCard = (item, index) => (
-        <View
-            style={[
-                applyTw(`${item.color} rounded-2xl p-8 items-center justify-center`),
-                { height: 200 }
-            ]}
-        >
-            <Text style={applyTw('text-6xl mb-4')}>{item.emoji}</Text>
-            <Text style={applyTw('text-white text-2xl font-bold mb-2')}>
-                {item.title}
-            </Text>
-            <Text style={applyTw('text-white text-center opacity-90')}>
-                {item.description}
-            </Text>
-        </View>
-    );
-
-    const renderProductCard = (item, index) => (
-        <View
-            style={[
-                applyTw('bg-[#111111] border border-[#2A2A2A] rounded-xl p-6'),
-                { height: 180 }
-            ]}
-        >
-            <View style={applyTw('flex-1 justify-between')}>
-                <View>
-                    <Text style={applyTw('text-white text-xl font-bold mb-2')}>
-                        {item.name}
-                    </Text>
-                    <Text style={applyTw('text-gray-400 text-sm mb-4')}>
-                        Premium quality product
-                    </Text>
-                </View>
-                <View style={applyTw('flex-row items-center justify-between')}>
-                    <Text style={applyTw('text-white text-2xl font-bold')}>
-                        {item.price}
-                    </Text>
-                    <View style={applyTw('flex-row items-center gap-1')}>
-                        <Text style={applyTw('text-yellow-500')}>⭐</Text>
-                        <Text style={applyTw('text-white font-medium')}>
-                            {item.rating}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        </View>
-    );
 
     return (
-        <ScrollView
-            style={applyTw('flex-1')}
-            contentContainerStyle={applyTw('p-5 gap-8')}
-        >
-            {/* Header */}
-            <View style={applyTw('gap-2')}>
-                <Text style={applyTw('text-white text-3xl font-bold')}>
-                    Carousel Component
-                </Text>
-                <Text style={applyTw('text-gray-400 text-base')}>
-                    Horizontal scrollable carousel with indicators
-                </Text>
-            </View>
-
-            {/* SECTION 1: Basic Carousel */}
-            <View style={applyTw('gap-4')}>
-                <Text style={applyTw('text-white text-xl font-semibold')}>
-                    🎠 Basic Carousel
-                </Text>
-                <Text style={applyTw('text-gray-400 text-sm')}>
-                    Simple carousel with colorful slides
-                </Text>
-
-                <Carousel items={carouselItems} renderItem={renderCarouselCard} />
-            </View>
-
-            {/* SECTION 2: Product Carousel */}
-            <View style={applyTw('gap-4')}>
-                <Text style={applyTw('text-white text-xl font-semibold')}>
-                    🛍️ Product Carousel
-                </Text>
-                <Text style={applyTw('text-gray-400 text-sm')}>
-                    Showcase products in a carousel
-                </Text>
-
-                <Carousel items={productItems} renderItem={renderProductCard} />
-            </View>
-
-            {/* SECTION 3: Features */}
-            <View style={applyTw('gap-4 mb-8')}>
-                <Text style={applyTw('text-white text-xl font-semibold')}>
-                    ✨ Features
-                </Text>
-
-                <View style={applyTw('bg-[#111111] rounded-lg p-4 gap-3')}>
-                    <View style={applyTw('flex-row items-start gap-3')}>
-                        <Text style={applyTw('text-blue-500 text-lg')}>👆</Text>
-                        <View style={applyTw('flex-1')}>
-                            <Text style={applyTw('text-white font-medium mb-1')}>
-                                Swipe Navigation
-                            </Text>
-                            <Text style={applyTw('text-gray-400 text-sm')}>
-                                Smooth horizontal scrolling with snap effect
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View style={applyTw('flex-row items-start gap-3')}>
-                        <Text style={applyTw('text-blue-500 text-lg')}>⚫</Text>
-                        <View style={applyTw('flex-1')}>
-                            <Text style={applyTw('text-white font-medium mb-1')}>
-                                Dot Indicators
-                            </Text>
-                            <Text style={applyTw('text-gray-400 text-sm')}>
-                                Visual indicators showing current slide
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View style={applyTw('flex-row items-start gap-3')}>
-                        <Text style={applyTw('text-blue-500 text-lg')}>🎨</Text>
-                        <View style={applyTw('flex-1')}>
-                            <Text style={applyTw('text-white font-medium mb-1')}>
-                                Custom Rendering
-                            </Text>
-                            <Text style={applyTw('text-gray-400 text-sm')}>
-                                Flexible renderItem prop for custom content
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View style={applyTw('flex-row items-start gap-3')}>
-                        <Text style={applyTw('text-blue-500 text-lg')}>📱</Text>
-                        <View style={applyTw('flex-1')}>
-                            <Text style={applyTw('text-white font-medium mb-1')}>
-                                Responsive
-                            </Text>
-                            <Text style={applyTw('text-gray-400 text-sm')}>
-                                Adapts to screen width automatically
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
-        </ScrollView>
+        <View style={applyTw('flex-1 bg-black')}>
+            <AnimatedTestimonials testimonials={testimonials} autoplay />
+        </View>
     );
 };
 

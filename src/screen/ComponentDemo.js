@@ -23,6 +23,15 @@ const COMPONENT_MAP = {
   'checkbox': UIComponents.CheckboxDemo,
   'data-table': UIComponents.DataTableDemo,
   'date-picker': UIComponents.DatePickerDemo,
+  'dialog': UIComponents.DialogDemo,
+  'drawer': UIComponents.DrawerDemo,
+  'field': UIComponents.FieldDemo,
+  'form': UIComponents.FormDemo,
+  'carousel': UIComponents.CarouselDemo,
+  'hover-card': UIComponents.HoverCardDemo,
+  'input-group': UIComponents.InputGroupDemo,
+  'input-otp': UIComponents.InputOTPDemo,
+  'item': UIComponents.ItemDemo,
 };
 
 const ComponentDemo = ({ componentId, onNavigate }) => {

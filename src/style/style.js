@@ -348,6 +348,7 @@ const generateStyles = () => {
   styles['grow-0'] = { flexGrow: 0 };
   styles['shrink'] = { flexShrink: 1 };
   styles['shrink-0'] = { flexShrink: 0 };
+  styles['flex-shrink-0'] = { flexShrink: 0 }; // Alias for shrink-0
 
   // Justify content
   styles['justify-start'] = { justifyContent: 'flex-start' };
@@ -1127,6 +1128,30 @@ export const withClassName = (Component) => {
 
 // Export individual style objects if needed
 export { tw, colors, spacing };
+
+/**
+ * Helper functions for specific corner border radius
+ * Useful for connected UI elements like OTP inputs
+ */
+export const roundedLeft = (radius = 8) => ({
+  borderTopLeftRadius: radius,
+  borderBottomLeftRadius: radius,
+});
+
+export const roundedRight = (radius = 8) => ({
+  borderTopRightRadius: radius,
+  borderBottomRightRadius: radius,
+});
+
+export const roundedTop = (radius = 8) => ({
+  borderTopLeftRadius: radius,
+  borderTopRightRadius: radius,
+});
+
+export const roundedBottom = (radius = 8) => ({
+  borderBottomLeftRadius: radius,
+  borderBottomRightRadius: radius,
+});
 
 // Default export
 export default applyTw;
