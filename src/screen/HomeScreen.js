@@ -10,60 +10,60 @@ import {
 import { applyTw } from '../style/style';
 
 const components = [
-  { id: 'accordion', name: 'Accordion' }, // done 
-  { id: 'alert', name: 'Alert' },// done
-  { id: 'alert-dialog', name: 'Alert Dialog' }, //  done 
-  { id: 'aspect-ratio', name: 'Aspect Ratio' }, //  done 
-  { id: 'avatar', name: 'Avatar' },// done
-  { id: 'ai-input', name: 'AI Input' }, // NEW - Chat input with voice
-  { id: 'badge', name: 'Badge' },
-  { id: 'breadcrumb', name: 'Breadcrumb' },
-  { id: 'button', name: 'Button' },
-  { id: 'button-group', name: 'Button Group' },
-  { id: 'calendar', name: 'Calendar' },
-  { id: 'card', name: 'Card' },
-  { id: 'carousel', name: 'Carousel' },
-  { id: 'chart', name: 'Chart' },
-  { id: 'checkbox', name: 'Checkbox' },
-  { id: 'data-table', name: 'Data Table' },
-  { id: 'date-picker', name: 'Date Picker' },
-  { id: 'dialog', name: 'Dialog' },
-  { id: 'drawer', name: 'Drawer' },
-  { id: 'dropdown-menu', name: 'Dropdown Menu' },
-  { id: 'empty', name: 'Empty' },
-  { id: 'field', name: 'Field' },
-  { id: 'form', name: 'Form' },
-  { id: 'hover-card', name: 'Hover Card' },
-  { id: 'input', name: 'Input' },
-  { id: 'input-group', name: 'Input Group' },
-  { id: 'input-otp', name: 'Input OTP' },
-  { id: 'item', name: 'Item' },
-  { id: 'kbd', name: 'Kbd' },
-  { id: 'label', name: 'Label' },
-  { id: 'menubar', name: 'Menubar' },
-  { id: 'navigation-menu', name: 'Navigation Menu' },
-  { id: 'pagination', name: 'Pagination' },
-  { id: 'popover', name: 'Popover' },
-  { id: 'progress', name: 'Progress' },
-  { id: 'radio-group', name: 'Radio Group' },
-  { id: 'resizable', name: 'Resizable' },
-  { id: 'scroll-area', name: 'Scroll Area' },
-  { id: 'select', name: 'Select' },
-  { id: 'separator', name: 'Separator' },
-  { id: 'sheet', name: 'Sheet' },
-  { id: 'sidebar', name: 'Sidebar' },
-  { id: 'skeleton', name: 'Skeleton' },
-  { id: 'slider', name: 'Slider' },
-  { id: 'sonner', name: 'Sonner' },
-  { id: 'spinner', name: 'Spinner' },
-  { id: 'switch', name: 'Switch' },
-  { id: 'table', name: 'Table' },
-  { id: 'tabs', name: 'Tabs' },
-  { id: 'textarea', name: 'Textarea' },
-  { id: 'toast', name: 'Toast' },
-  { id: 'toggle', name: 'Toggle' },
-  { id: 'toggle-group', name: 'Toggle Group' },
-  { id: 'tooltip', name: 'Tooltip' },
+  { id: 'accordion', name: 'Accordion', status: 'done' },
+  { id: 'alert', name: 'Alert', status: 'done' },
+  { id: 'alert-dialog', name: 'Alert Dialog', status: 'done' },
+  { id: 'aspect-ratio', name: 'Aspect Ratio', status: 'done' },
+  { id: 'avatar', name: 'Avatar', status: 'done' },
+  { id: 'ai-input', name: 'AI Input', status: 'done' },
+  { id: 'badge', name: 'Badge', status: 'done' },
+  { id: 'breadcrumb', name: 'Breadcrumb', status: 'done' },
+  { id: 'button', name: 'Button', status: 'done' },
+  { id: 'button-group', name: 'Button Group', status: 'done' },
+  { id: 'calendar', name: 'Calendar', status: 'done' },
+  { id: 'card', name: 'Card', status: 'done' },
+  { id: 'carousel', name: 'Carousel', status: 'done' },
+  { id: 'chart', name: 'Chart', status: 'done' },
+  { id: 'checkbox', name: 'Checkbox', status: 'done' },
+  { id: 'date-picker', name: 'Date Picker', status: 'done' },
+  { id: 'dialog', name: 'Dialog', status: 'done' },
+  { id: 'drawer', name: 'Drawer', status: 'done' },
+  { id: 'dropdown-menu', name: 'Dropdown Menu', status: 'done' },
+  { id: 'empty', name: 'Empty', status: 'done' },
+  { id: 'field', name: 'Field', status: 'done' },
+  { id: 'form', name: 'Form', status: 'done' },
+  { id: 'hover-card', name: 'Hover Card', status: 'progress' },
+  { id: 'input', name: 'Input', status: 'done' },
+  { id: 'input-group', name: 'Input Group', status: 'done' },
+  { id: 'input-otp', name: 'Input OTP', status: 'done' },
+  { id: 'item', name: 'Item', status: 'done' },
+  { id: 'kbd', name: 'Kbd', status: 'done' },
+  { id: 'label', name: 'Label', status: 'done' },
+  { id: 'menubar', name: 'Menubar', status: 'done' },
+  { id: 'music-player', name: 'Music Player', status: 'done' },
+  { id: 'navigation-menu', name: 'Navigation Menu', status: 'progress' },
+  { id: 'pagination', name: 'Pagination', status: 'progress' },
+  { id: 'popover', name: 'Popover', status: 'done' },
+  { id: 'progress', name: 'Progress', status: 'done' },
+  { id: 'radio-group', name: 'Radio Group', status: 'done' },
+  { id: 'resizable', name: 'Resizable', status: 'progress' },
+  { id: 'scroll-area', name: 'Scroll Area', status: 'progress' },
+  { id: 'select', name: 'Select', status: 'progress' },
+  { id: 'separator', name: 'Separator', status: 'progress' },
+  { id: 'sheet', name: 'Sheet', status: 'progress' },
+  { id: 'sidebar', name: 'Sidebar', status: 'progress' },
+  { id: 'skeleton', name: 'Skeleton', status: 'progress' },
+  { id: 'slider', name: 'Slider', status: 'progress' },
+  { id: 'sonner', name: 'Sonner', status: 'progress' },
+  { id: 'spinner', name: 'Spinner', status: 'done' },
+  { id: 'switch', name: 'Switch', status: 'done' },
+  { id: 'table', name: 'Table', status: 'done' },
+  { id: 'tabs', name: 'Tabs', status: 'done' },
+  { id: 'textarea', name: 'Textarea', status: 'done' },
+  { id: 'toast', name: 'Toast', status: 'progress' },
+  { id: 'toggle', name: 'Toggle', status: 'progress' },
+  { id: 'toggle-group', name: 'Toggle Group', status: 'progress' },
+  { id: 'tooltip', name: 'Tooltip', status: 'progress' },
 ];
 
 
@@ -99,13 +99,23 @@ const HomeScreen = ({ onNavigate }) => {
             <TouchableOpacity
               key={component.id}
               style={applyTw(
-                'bg-[#111111] rounded-lg px-4 py-2 flex-row items-center justify-between mb-1 border border-[#2A2A2A]'
+                'bg-[#111111] rounded-lg px-4 py-3 flex-row items-center justify-between mb-1 border border-[#2A2A2A]'
               )}
               onPress={() => onNavigate && onNavigate('component-detail', { componentId: component.id })}
               activeOpacity={0.7}>
-              <Text style={applyTw('text-white text-base')}>
-                {component.name}
-              </Text>
+              <View style={applyTw('flex-row items-center gap-3 flex-1')}>
+                <Text style={applyTw('text-white text-base')}>
+                  {component.name}
+                </Text>
+                {/* Status Badge */}
+                <View style={applyTw(`px-2 py-0.5 rounded-full ${component.status === 'done' ? 'bg-green-500/20' : 'bg-gray-500/20'
+                  }`)}>
+                  <Text style={applyTw(`text-xs font-medium ${component.status === 'done' ? 'text-green-400' : 'text-gray-400'
+                    }`)}>
+                    {component.status === 'done' ? 'Done' : 'In Progress'}
+                  </Text>
+                </View>
+              </View>
               <Text style={applyTw('text-gray-500 text-xl')}>›</Text>
             </TouchableOpacity>
           ))}

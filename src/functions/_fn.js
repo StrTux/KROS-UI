@@ -1,4 +1,9 @@
-// Common utility functions for UI components
+// Zest UI - Common utility functions for React Native CLI components
+import React from 'react';
+import { Text } from 'react-native';
+
+// Note: Ensure FlaticonIcons is imported or available in your scope
+// import FlaticonIcons from './your-icon-font-map'; 
 
 /**
  * Format component name for display
@@ -6,6 +11,7 @@
  * @returns {string} - Formatted name (e.g., 'Button', 'Alert Dialog')
  */
 export const formatComponentName = (id) => {
+  if (!id) return '';
   return id
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -14,9 +20,6 @@ export const formatComponentName = (id) => {
 
 /**
  * Generate random value for demos
- * @param {number} min - Minimum value
- * @param {number} max - Maximum value
- * @returns {number} - Random number
  */
 export const randomValue = (min = 0, max = 100) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -24,38 +27,30 @@ export const randomValue = (min = 0, max = 100) => {
 
 /**
  * Delay function for async operations
- * @param {number} ms - Milliseconds to delay
- * @returns {Promise}
  */
 export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * Check if component demo exists
- * @param {string} componentId - Component ID
- * @param {object} componentMap - Component mapping object
- * @returns {boolean}
  */
 export const componentExists = (componentId, componentMap) => {
-  return componentId in componentMap;
+  return componentId && componentMap ? componentId in componentMap : false;
 };
 
 /**
  * Get demo data for components
- * @param {string} type - Type of demo data needed
- * @returns {array|object}
  */
 export const getDemoData = (type) => {
   const demoData = {
-    colors: ['red', 'blue', 'green', 'yellow', 'purple', 'pink'],
+    colors: ['#000000', '#FFFFFF', '#333333', '#666666'], // Professional B&W Palette
     sizes: ['sm', 'md', 'lg', 'xl'],
     variants: ['default', 'outline', 'ghost', 'destructive', 'secondary'],
     users: [
       { name: 'John Doe', email: 'john@example.com', role: 'Admin' },
       { name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
-      { name: 'Bob Johnson', email: 'bob@example.com', role: 'Editor' },
     ],
     loremShort: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    loremLong: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    loremLong: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   };
 
   return demoData[type] || null;
@@ -63,63 +58,47 @@ export const getDemoData = (type) => {
 
 /**
  * Create section wrapper for demos
- * @param {string} title - Section title
- * @returns {object} - Style configuration
  */
 export const createDemoSection = (title) => {
   return {
     title,
-    containerStyle: 'mb-6',
-    titleStyle: 'text-white text-lg font-semibold mb-3',
-    contentStyle: 'gap-3',
+    containerStyle: { marginBottom: 24 },
+    titleStyle: { color: '#FFFFFF', fontSize: 18, fontWeight: '600', marginBottom: 12 },
+    contentStyle: { flexDirection: 'row', gap: 12 },
   };
-<<<<<<< HEAD
+};
 
+/**
+ * Format icon name (Removes prefix and returns clean key)
+ */
+export const formatIconName = (iconString) => {
+  if (!iconString || typeof iconString !== 'string') return '';
+  const parts = iconString.split('-');
+  // If your string is "fi-rr-home", this returns "home"
+  return parts.length > 2 ? parts.slice(2).join('-') : iconString;
+};
 
+/**
+ * Render Flaticon component
+ * Professional Black & White styling
+ */
+export const renderFlaticon = (icon, { size = 22, color = '#FFFFFF', isSelected = false } = {}, FlaticonIcons) => {
+  if (!icon || typeof icon !== 'string' || !FlaticonIcons) return null;
 
+  const iconKey = formatIconName(icon);
+  const glyph = FlaticonIcons[iconKey];
 
+  if (!glyph) return null;
 
-
-  formatIconName = (iconString) => {
-    // console.log('Formatting icon name:', iconString);
-    if (!iconString || typeof iconString !== 'string') return '';
-    const parts = iconString.split('-');
-    const remainingParts = parts.slice(2);
-    // console.log('Remaining parts:', remainingParts.join('-'));
-    // Sirf icon key output (e.g. "home", "user", "terms-check")
-    return remainingParts.join('-');
-  };
-
-
-
-  renderFlaticon = (icon, { size = 22, color = '#4B5563', isSelected = false } = {}) => {
-    // console.log('Rendering icon:', icon, size, color, isSelected);
-    // console.log('FlaticonIcons available:', !!FlaticonIcons);
-    let glyph;
-    let iconKey;
-    if (!icon || typeof icon !== 'string') return null;
-    // console.log('Icon string:', icon);
-    iconKey = this.formatIconName(icon);
-    // console.log('Formatted icon key:', iconKey);
-    glyph = iconKey && FlaticonIcons[iconKey];
-    // console.log('Rendering icon:', iconKey, 'glyph:', glyph);
-    if (!glyph) {
-      // console.log('No glyph found for key:', iconKey);
-      return null;
-    }
-    return (
-      <Text
-        style={{
-          fontFamily: 'uicons-regular-rounded-J3WOUERV',
-          fontSize: size,
-          color: color,
-        }}
-      >
-        {glyph}
-      </Text>
-    );
-  };
-
-=======
->>>>>>> c5488638a7dcafba53c26bf5bfa83913d44a125f
+  return (
+    <Text
+      style={{
+        fontFamily: 'uicons-regular-rounded-J3WOUERV', // Ensure this font is linked in your CLI project
+        fontSize: size,
+        color: isSelected ? '#FFFFFF' : color,
+      }}
+    >
+      {glyph}
+    </Text>
+  );
 };

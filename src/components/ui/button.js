@@ -89,12 +89,14 @@ export const Button = ({
                     {isIconOnly && icon ? (
                         <View>{icon}</View>
                     ) : (
-                        typeof children === 'string' ? (
+                        // If children is a string, number, or array (likely text), wrap in Text. 
+                        // If it's a single Element (View/Image), render as is.
+                        React.isValidElement(children) ? (
+                            children
+                        ) : (
                             <Text style={applyTw(`${textVariantClass} ${textSizeClass} font-medium`)}>
                                 {children}
                             </Text>
-                        ) : (
-                            children
                         )
                     )}
                     {icon && iconPosition === 'right' && !isIconOnly && (

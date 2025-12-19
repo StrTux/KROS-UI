@@ -213,18 +213,23 @@ const convertUnit = (value) => {
 
 /**
  * Parse arbitrary value from class name
- * Examples: h-[5rem], w-[20px], p-[2em], bg-[#ff0000], text-[18px]
+ * Examples: h-[5rem], w-[20px], p-[2em], bg-[#ff0000], text-[18px], bg-[#111]/50
  * @param {string} className - Class name with arbitrary value
  * @returns {object|null} - Style object or null
  */
 const parseArbitraryValue = (className) => {
-  // Match pattern like "property-[value]"
-  const match = className.match(/^([a-z-]+)-\[([^\]]+)\]$/);
+  // Match pattern like "property-[value]" or "property-[value]/opacity"
+  const match = className.match(/^([a-z-]+)-\[([^\]]+)\](\/(\d+))?$/);
 
   if (!match) return null;
 
-  const [, property, value] = match;
-  const convertedValue = convertUnit(value);
+  const [, property, value, , opacity] = match;
+  let convertedValue = convertUnit(value);
+
+  // If opacity modifier is present and value is a color, convert to rgba
+  if (opacity && typeof convertedValue === 'string' && convertedValue.startsWith('#')) {
+    convertedValue = hexToRgba(convertedValue, parseInt(opacity));
+  }
 
   // Property mappings for arbitrary values
   const propertyMap = {
