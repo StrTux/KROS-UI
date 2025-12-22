@@ -218,7 +218,7 @@ const convertUnit = (value) => {
  * @returns {object|null} - Style object or null
  */
 const parseArbitraryValue = (className) => {
-  // Match pattern like "property-[value]" or "property-[value]/opacity"
+  // Match pattern like "property-[value]" or "property-[value]/opaci
   const match = className.match(/^([a-z-]+)-\[([^\]]+)\](\/(\d+))?$/);
 
   if (!match) return null;

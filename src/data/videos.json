@@ -1,0 +1,41 @@
+{
+    "videos": [
+        {
+            "id": "bheeshma-2020",
+            "title": "Bheeshma (2020) Hin-Tel (1080p 10bit NF WEBRip HEVC x265 ESub Musafirboy) [PMZ]",
+            "subtitle": "Back for one remarkable night!",
+            "description": "India's grandest Sufi sensation returns!",
+            "url": "https://thugs-mirror.msuccess.workers.dev/download.aspx?file=ceDiROuq4NclRrtAB8KBDCmcNOT32dkAIBHwuiIcAbS900ygYSTPwLC25QigY2Rk&expiry=G%2F5S21smwRIxiUu6AQirSg%3D%3D&mac=40b77945ed7ccf2b87766cabb3aab3755737731715dae757bc922289d3347b52",
+            "thumbnail": "https://images.unsplash.com/photo-1672758247442-82df22f5899e",
+            "duration": 29,
+            "type": "event",
+            "audioCodec": "eac3"
+        }
+    ],
+    "playlists": [
+        {
+            "id": "bheeshma-playlist",
+            "title": "Bheeshma - Complete",
+            "videos": [
+                {
+                    "id": "part-1",
+                    "title": "Bheeshma - Part 1",
+                    "duration": "00:29",
+                    "url": "https://thugs-mirror.msuccess.workers.dev/download.aspx?file=ceDiROuq4NclRrtAB8KBDCmcNOT32dkAIBHwuiIcAbS900ygYSTPwLC25QigY2Rk&expiry=G%2F5S21smwRIxiUu6AQirSg%3D%3D&mac=40b77945ed7ccf2b87766cabb3aab3755737731715dae757bc922289d3347b52"
+                },
+                {
+                    "id": "part-2",
+                    "title": "Bheeshma - Part 2",
+                    "duration": "01:15",
+                    "url": "https://thugs-mirror.msuccess.workers.dev/download.aspx?file=ceDiROuq4NclRrtAB8KBDCmcNOT32dkAIBHwuiIcAbS900ygYSTPwLC25QigY2Rk&expiry=G%2F5S21smwRIxiUu6AQirSg%3D%3D&mac=40b77945ed7ccf2b87766cabb3aab3755737731715dae757bc922289d3347b52"
+                },
+                {
+                    "id": "part-3",
+                    "title": "Bheeshma - Part 3",
+                    "duration": "02:30",
+                    "url": "https://thugs-mirror.msuccess.workers.dev/download.aspx?file=ceDiROuq4NclRrtAB8KBDCmcNOT32dkAIBHwuiIcAbS900ygYSTPwLC25QigY2Rk&expiry=G%2F5S21smwRIxiUu6AQirSg%3D%3D&mac=40b77945ed7ccf2b87766cabb3aab3755737731715dae757bc922289d3347b52"
+                }
+            ]
+        }
+    ]
+}

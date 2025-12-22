@@ -43,6 +43,7 @@ const COMPONENT_MAP = {
   'textarea': UIComponents.TextareaDemo,
   'music-player': UIComponents.MusicPlayerDemo,
   'spinner': UIComponents.SpinnerDemo,
+  'streaming': UIComponents.StreamingDemo,
 };
 
 const ComponentDemo = ({ componentId, onNavigate }) => {

@@ -37,6 +37,8 @@ export { TabsDemo } from './tabs'; // ADDED
 export { TextareaDemo } from './textarea'; // ADDED
 export { MusicPlayerDemo } from './MusicPlayer'; // ADDED
 export { SpinnerDemo } from './spinner'; // ADDED
+export { StreamingDemo } from './streming'; // ADDED
+
 
 
 // Export individual components for use in other components

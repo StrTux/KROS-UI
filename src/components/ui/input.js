@@ -47,14 +47,15 @@ export const Input = ({
         'bg-[#111]',
         hasError ? 'border-red-500' : isFocused ? 'border-white' : 'border-[#333]',
         isFloating ? 'min-h-[56px] pt-4' : 'min-h-[48px]',
-        disabled ? 'opacity-50' : '',
+        disabled ? 'opacity-50' : '', 'px-3',
         inputClassName // Layout props (h-8, px-10) apply here
     ].join(' ');
 
     const textInputClasses = [
         'flex-1 text-base text-white font-normal',
         'bg-transparent border-0 m-0',
-        'h-full',
+        'h-full ',
+        'ml-2',
         inputClassName // Text props (text-sm) apply here
     ].join(' ');
 

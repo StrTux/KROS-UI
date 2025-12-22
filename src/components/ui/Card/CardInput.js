@@ -28,7 +28,7 @@ export const Input = ({
             keyboardType={keyboardType}
             autoCapitalize={autoCapitalize}
             style={applyTw(
-                `bg-black border border-[#ffffff40] rounded-md px-4 py-3 text-white text-base ${className}`
+                `bg-black p-2 border border-[#ffffff40] rounded-md px-4 py-3 text-white text-base ${className}`
             )}
             {...props}
         />

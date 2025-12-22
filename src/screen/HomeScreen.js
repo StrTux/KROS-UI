@@ -56,6 +56,7 @@ const components = [
   { id: 'slider', name: 'Slider', status: 'progress' },
   { id: 'sonner', name: 'Sonner', status: 'progress' },
   { id: 'spinner', name: 'Spinner', status: 'done' },
+  { id: 'streaming', name: 'Streaming', status: 'done' },
   { id: 'switch', name: 'Switch', status: 'done' },
   { id: 'table', name: 'Table', status: 'done' },
   { id: 'tabs', name: 'Tabs', status: 'done' },
