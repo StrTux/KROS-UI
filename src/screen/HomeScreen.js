@@ -10,6 +10,9 @@ import {
 import { applyTw } from '../style/style';
 
 const components = [
+  { id: 'article', name: 'Article', status: 'done' },
+  { id: 'purchase-card', name: 'Purchase Card', status: 'done' },
+  { id: 'profile-card', name: 'Profile Card', status: 'done' },
   { id: 'accordion', name: 'Accordion', status: 'done' },
   { id: 'alert', name: 'Alert', status: 'done' },
   { id: 'alert-dialog', name: 'Alert Dialog', status: 'done' },

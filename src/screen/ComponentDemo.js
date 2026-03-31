@@ -5,6 +5,9 @@ import * as UIComponents from '../components/ui/index';
 
 // Component mapping
 const COMPONENT_MAP = {
+  'article': UIComponents.Article,
+  'purchase-card': UIComponents.PurchaseCardDemo,
+  'profile-card': UIComponents.ProfileCardDemo,
   'accordion': UIComponents.AccordionDemo,
   'alert': UIComponents.AlertDemo,
   'alert-dialog': UIComponents.Alert_Dialog,
@@ -44,6 +47,7 @@ const COMPONENT_MAP = {
   'music-player': UIComponents.MusicPlayerDemo,
   'spinner': UIComponents.SpinnerDemo,
   'streaming': UIComponents.StreamingDemo,
+  'menubar': UIComponents.MenubarDemo,
 };
 
 const ComponentDemo = ({ componentId, onNavigate }) => {

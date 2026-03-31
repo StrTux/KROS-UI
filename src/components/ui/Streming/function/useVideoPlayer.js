@@ -1,24 +1,17 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { detectStreamType, isStreamSeekable, detectAudioCodec, requiresVLCPlayer } from './streamUtils';
+import { detectStreamType, isStreamSeekable } from './streamUtils';
 
 /**
- * Custom hook for Video player (hybrid VLC/react-native-video)
- * Automatically uses VLC for E-AC3/Dolby audio
- * Uses react-native-video for standard codecs
+ * Custom hook for Video player (Standard react-native-video)
  */
 export const useVideoPlayer = (videoSource) => {
     const videoRef = useRef(null);
 
     // Support both video object and URL string
     const videoUrl = typeof videoSource === 'string' ? videoSource : videoSource?.url;
-    const videoCodec = typeof videoSource === 'object' ? videoSource?.audioCodec : null;
 
-    // Detect stream type and audio codec
+    // Detect stream type
     const streamType = detectStreamType(videoUrl);
-
-    // Prioritize codec from metadata, fallback to URL detection
-    const audioCodec = videoCodec || detectAudioCodec(videoUrl);
-    const useVLC = requiresVLCPlayer(audioCodec);  // Use VLC for E-AC3/Dolby
     const seekable = isStreamSeekable(streamType);
 
     // Player state
@@ -138,11 +131,9 @@ export const useVideoPlayer = (videoSource) => {
         isBuffering,
         playbackSpeed,
         streamType,
-        audioCodec,
-        useVLC,
         seekable,
-        audioTracks: useVLC ? [] : audioTracks,  // Disable audio tracks for VLC
-        selectedAudioTrack: useVLC ? null : selectedAudioTrack,
+        audioTracks,
+        selectedAudioTrack,
 
         // Controls
         togglePlay,
@@ -154,13 +145,13 @@ export const useVideoPlayer = (videoSource) => {
         increaseVolume,
         decreaseVolume,
         changeSpeed,
-        changeAudioTrack: useVLC ? () => { } : changeAudioTrack,  // Disable for VLC
+        changeAudioTrack,
 
         // Event handlers
         onProgress,
         onLoad,
         onBuffer,
         onEnd,
-        onAudioTracks: useVLC ? () => { } : onAudioTracks,  // Disable for VLC
+        onAudioTracks,
     };
 };

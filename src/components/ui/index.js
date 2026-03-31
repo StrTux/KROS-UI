@@ -1,3 +1,20 @@
+/**
+ * KROS UI — React Native CLI Component Library
+ * Cross-platform UI components for iOS & Android.
+ *
+ * Usage (copy-paste workflow, like shadcn/ui):
+ *   1. Copy the component file (e.g. button.js) into your project
+ *   2. Copy src/style/style.js for the applyTw style engine
+ *   3. Import and use: import { Button } from './components/ui/button'
+ *
+ * This index.js exports:
+ *   - Demo components (*Demo) — used by the built-in showcase app
+ *   - Individual components — the actual reusable primitives
+ *
+ * @see https://github.com/YOUR_GITHUB/KROS-UI
+ * @license MIT
+ */
+
 // Export all UI components
 export { default as AccordionDemo } from './accordion';//  done 
 export { default as AlertDemo } from './Alert';//  done 
@@ -38,6 +55,10 @@ export { TextareaDemo } from './textarea'; // ADDED
 export { MusicPlayerDemo } from './MusicPlayer'; // ADDED
 export { SpinnerDemo } from './spinner'; // ADDED
 export { StreamingDemo } from './streming'; // ADDED
+export { Article } from './Article'; // ADDED
+export { PurchaseCardDemo } from './PurchaseCard'; // ADDED
+export { ProfileCardDemo } from './ProfileCard'; // ADDED
+export { MenubarDemo } from './menubar'; // ADDED
 
 
 

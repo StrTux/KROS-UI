@@ -1,32 +1,39 @@
-import Icon from './nav.svg';
-import Home from './home.svg';
-import Pause from './pause.svg';
-import DocFrom from './doc.svg';
-import Heart from './heartinhand.svg';
-import BlueSvg from './bluesvg.svg'
-import White from './whiteline.svg'
-import ADD from './fi-rs-add.svg'
-
-const ICONS = {
-  icon: Icon,
-  home: Home,
-  pause: Pause,
-  docfrom: DocFrom,
-  heart: Heart,
-  bluesvg: BlueSvg,
-  white: White,
-  add: ADD
-};
-
 import React from 'react';
+import { Text } from 'react-native';
+import FlaticonIcons from './iconMap';
 
-export function SvgIcon({ name = 'icon', width = 24, height = 24, ...rest }) {
-  const IconComp = ICONS[name];
-  if (!IconComp) {
-    console.warn(`Icon "${name}" not found`);
+// Load the Flaticon font family
+const ICON_FONT_FAMILY = 'uicons-regular-rounded';
+
+/**
+ * Render a Flaticon icon
+ * @param {string} name - Icon name from iconMap (e.g., 'bag-shopping-minus', 'home', 'heart')
+ * @param {number} size - Icon size in pixels
+ * @param {string} color - Icon color
+ * @param {object} style - Additional style object
+ */
+const renderIcon = (name, size = 24, color = '#000', style = {}) => {
+  const iconCode = FlaticonIcons[name];
+
+  if (!iconCode) {
+    console.warn(`Icon "${name}" not found in iconMap`);
     return null;
   }
-  return <IconComp width={width} height={height} {...rest} />;
-}
 
-export { Icon, Home, Pause, DocFrom, Heart , BlueSvg, White, ADD };
+  return (
+    <Text
+      style={[
+        {
+          fontFamily: ICON_FONT_FAMILY,
+          fontSize: size,
+          color: color,
+        },
+        style,
+      ]}
+    >
+      {iconCode}
+    </Text>
+  );
+};
+
+export default renderIcon;
