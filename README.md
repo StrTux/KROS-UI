@@ -6,6 +6,18 @@
 
 ---
 
+## 📸 Preview
+
+<p align="center">
+  <img src="./assest/1.jpeg" width="18%" alt="KROS UI Screenshot 1" />
+  <img src="./assest/2.jpeg" width="18%" alt="KROS UI Screenshot 2" />
+  <img src="./assest/3.jpeg" width="18%" alt="KROS UI Screenshot 3" />
+  <img src="./assest/4.jpeg" width="18%" alt="KROS UI Screenshot 4" />
+  <img src="./assest/5.jpeg" width="18%" alt="KROS UI Screenshot 5" />
+</p>
+
+---
+
 ## ✨ Why KROS UI?
 
 | Feature | Description |
