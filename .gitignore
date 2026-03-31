@@ -93,3 +93,8 @@ tmp/
 temp/
 *.tmp
 *.bak
+
+
+# aded the package lock json
+
+package-lock.json/
