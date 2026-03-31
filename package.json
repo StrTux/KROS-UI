@@ -5,10 +5,10 @@
   "keywords": ["react-native", "ui", "components", "cli", "tailwind", "shadcn", "ios", "android", "kros-ui"],
   "author": "KROS UI Contributors",
   "license": "MIT",
-  "homepage": "https://github.com/YOUR_GITHUB/KROS-UI#readme",
+  "homepage": "https://github.com/StrTux/KROS-UI#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_GITHUB/KROS-UI.git"
+    "url": "https://github.com/StrTux/KROS-UI.git"
   },
   "private": true,
   "scripts": {
