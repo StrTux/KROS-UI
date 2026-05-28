@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState } from 'react';
+import { primeThemeRuntime, setActiveTheme } from './themes/themeRuntime';
 
 // Create Theme Context
 const ThemeContext = createContext();
 
 // Theme configuration
-const themes = {
+export const themes = {
     light: {
         background: '#ffffff',
         foreground: '#000000',
@@ -37,6 +38,8 @@ const themes = {
     },
 };
 
+primeThemeRuntime(themes);
+
 // ThemeProvider Component
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('dark'); // Default to dark theme
@@ -46,6 +49,7 @@ export const ThemeProvider = ({ children }) => {
     };
 
     const currentTheme = themes[theme];
+    setActiveTheme(theme, currentTheme);
 
     return (
         <ThemeContext.Provider value={{ theme, currentTheme, toggleTheme }}>

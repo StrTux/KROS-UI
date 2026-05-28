@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, Animated, ScrollView } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Text } from './text';
 import { Label } from './label';
 

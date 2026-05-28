@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { applyTw } from '../style/style';
+import { applyTw } from '../style/_elst';
 
 const components = [
   { id: 'article', name: 'Article', status: 'done' },

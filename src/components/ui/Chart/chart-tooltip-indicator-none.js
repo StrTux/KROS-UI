@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native';
-import { applyTw } from '../../../style/style';
+import { applyTw } from '../../../style/_elst';
 import { Text } from '../text';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../card';
 import Svg, { Rect, Line, G, Defs, LinearGradient, Stop, Text as SvgText } from 'react-native-svg';

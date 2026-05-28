@@ -6,7 +6,7 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { renderFlaticon } from '../../functions/iconUtils';
 
 // ==================== ITEM COMPONENTS ====================

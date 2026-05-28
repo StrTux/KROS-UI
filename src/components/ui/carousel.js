@@ -11,7 +11,7 @@ import Animated, {
     FadeInDown,
     FadeOutUp,
 } from 'react-native-reanimated';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { renderFlaticon } from '../../functions/iconUtils';
 
 const { width } = Dimensions.get('window');

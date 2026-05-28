@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, SafeAreaView } from 'react-native';
-import { applyTw } from '../style/style';
+import { applyTw } from '../style/_elst';
 import { Badge } from '../components/ui/badge';
 import { Text } from '../components/ui/text';
 

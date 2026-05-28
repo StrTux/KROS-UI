@@ -7,7 +7,7 @@ import {
     ScrollView,
     Pressable,
 } from 'react-native';
-import applyTw from '../../style/style';
+import applyTw from '../../style/_elst';
 import { renderFlaticon } from '../../functions/_fn';
 import FlaticonIcons from '../../assest/icon/iconMap';
 

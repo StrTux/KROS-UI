@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Label } from './label';
 
 // Context for RadioGroup

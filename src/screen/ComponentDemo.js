@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, SafeAreaView, ScrollView, TouchableOpacity, Text, BackHandler } from 'react-native';
-import { applyTw } from '../style/style';
+import { applyTw } from '../style/_elst';
 import * as UIComponents from '../components/ui/index';
 
 // Component mapping

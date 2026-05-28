@@ -13,7 +13,7 @@
 ### How It Works
 
 ```js
-import { applyTw } from '../style/style';
+import { applyTw  } from '../style/_elst';
 
 // Input:  string of class names
 // Output: React Native StyleSheet-compatible object

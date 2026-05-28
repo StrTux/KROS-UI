@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
-import { applyTw } from '../style/style';
+import { applyTw } from '../style/_elst';
 
 // Import screens
 import HomeScreen from '../screen/HomeScreen';

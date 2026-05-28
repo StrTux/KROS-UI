@@ -11,7 +11,7 @@ import {
     ScrollView,
     Platform,
 } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Button } from './button';
 import { Input } from './input';
 import { Label } from './label';

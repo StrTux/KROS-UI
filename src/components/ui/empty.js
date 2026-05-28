@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Button } from './button';
 import { renderFlaticon } from '../../functions/iconUtils';
 import { InputGroup, InputGroupInput, InputGroupAddon } from './input_group';

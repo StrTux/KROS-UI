@@ -1,4 +1,5 @@
 import { Dimensions, PixelRatio, Platform, Appearance } from 'react-native';
+import { getDeviceContext, getResponsiveSignature, matchesResponsiveVariant } from './responsive/deviceContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -138,7 +139,12 @@ export default {
   scaleImageSize,
   scaleVideoSize,
   isDarkMode,
+  getDeviceContext,
+  getResponsiveSignature,
+  matchesResponsiveVariant,
   scaleSpacing,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
 };
+
+export { getDeviceContext, getResponsiveSignature, matchesResponsiveVariant };

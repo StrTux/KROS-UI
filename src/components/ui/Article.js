@@ -10,8 +10,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 // import { WebView } from 'react-native-webview'; // Static import removed to prevent crash if native module missing
-import applyTw from '../../style/style.js';
-// import applyTw2 from '../../style/_elst.js';
+import applyTw from '../../style/_elst.js';
 import blockchainArticlesData from './blockchain_articles.json';
 
 // Safe WebView import

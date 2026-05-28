@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, Modal, TouchableWithoutFeedback } from 'react-native';
 import { Calendar } from './calendar';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 
 // ==================== FIELD COMPONENTS ====================
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, Easing, ScrollView, TextInput } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Text } from './text';
 import { Button } from './button';
 import { Card, CardHeader, CardContent, CardFooter } from './card';

@@ -5,8 +5,7 @@ import {
     TextInput,
     ScrollView,
 } from 'react-native';
-import { applyTw, roundedLeft, roundedRight } from '../../style/style';
-
+import { applyTw, roundedLeft, roundedRight } from '../../style/_elst';
 // ==================== INPUT OTP COMPONENTS ====================
 
 // Context for sharing state

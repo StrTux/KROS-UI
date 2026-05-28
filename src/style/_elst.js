@@ -2,9 +2,9 @@
 
 // Updated with advanced features: opacity colors, transforms, gradients, and more
 
-import { StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { StyleSheet, Platform, PixelRatio } from 'react-native';
 
-import { fonts, fontWeights } from '../functions/_fn';
 import {
   scaleSize,
   scaleFont,
@@ -12,10 +12,53 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
 } from './_responsive';
+import { createApplyTwRuntime } from './core/runtime/applyTwRuntime';
+import {
+  clearCustomUtilities,
+  registerTwUtilities as registerCustomTwUtilities,
+  registerTwUtility as registerCustomTwUtility,
+} from './core/registry/customRegistry';
+
+const BASE_FONT_SIZE = 16;
+
+
+const fonts = {
+  thin: 'Poppins-Thin',
+  extraLight: 'Poppins-ExtraLight',
+  light: 'Poppins-Light',
+  regular: 'Poppins-Regular',
+  medium: 'Poppins-Medium',
+  semiBold: 'Poppins-SemiBold',
+  bold: 'Poppins-Bold',
+  extraBold: 'Poppins-ExtraBold',
+  black: 'Poppins-Black',
+  thinItalic: 'Poppins-ThinItalic',
+  extraLightItalic: 'Poppins-ExtraLightItalic',
+  lightItalic: 'Poppins-LightItalic',
+  italic: 'Poppins-Italic',
+  mediumItalic: 'Poppins-MediumItalic',
+  semiBoldItalic: 'Poppins-SemiBoldItalic',
+  boldItalic: 'Poppins-BoldItalic',
+  extraBoldItalic: 'Poppins-ExtraBoldItalic',
+  blackItalic: 'Poppins-BlackItalic',
+};
+
+// Font weights mapping
+const fontWeights = {
+  thin: '100',
+  extraLight: '200',
+  light: '300',
+  regular: '400',
+  medium: '500',
+  semiBold: '600',
+  bold: '700',
+  extraBold: '800',
+  black: '900',
+};
+
 
 // Base font size for rem/em conversion (standard is 16px)
 
-const BASE_FONT_SIZE = scaleFont(14);
 
 const scaleObjectValues = (obj, scaler = scaleSize) =>
   Object.fromEntries(
@@ -24,6 +67,7 @@ const scaleObjectValues = (obj, scaler = scaleSize) =>
       typeof value === 'number' ? scaler(value) : value,
     ])
   );
+
 
 // Tailwind CSS Color Palette
 
@@ -1843,6 +1887,12 @@ const generateStyles = () => {
 
 const tw = generateStyles();
 
+const applyTwRuntime = createApplyTwRuntime({
+  registry: tw,
+  parseArbitraryValue,
+  onUnknownClass: className => console.warn(`Tailwind class not found: ${className}`),
+});
+
 /**
 
 * Apply Tailwind-style classes to React Native components
@@ -1863,88 +1913,44 @@ const tw = generateStyles();
 
 * // Color with opacity
 
-* <View style={applyTw2('bg-black/50')}>Hello</View>
+* <View style={applyTw('bg-black/50')}>Hello</View>
 
 * // Transforms
 
-* <Text style={applyTw2('rotate-45 scale-110')}>Transformed</Text>
+* <Text style={applyTw('rotate-45 scale-110')}>Transformed</Text>
 
 * // Arbitrary values
 
-* <View style={applyTw2('h-[5rem] w-[20px]')}>Custom</View>
+* <View style={applyTw('h-[5rem] w-[20px]')}>Custom</View>
 
 * // Shadows with colors
 
-* <View style={applyTw2('shadow-blue-500')}>Blue Shadow</View>
+* <View style={applyTw('shadow-blue-500')}>Blue Shadow</View>
 
 */
 
-export const applyTw2 = (classNames) => {
+export const applyTw = classNames => applyTwRuntime.applyTw(classNames);
 
-  if (!classNames) return {};
+export const clearApplyTwCache = () => applyTwRuntime.clearCache();
 
-  const classes = classNames.trim().split(/\s+/);
+export const getApplyTwCacheSize = () => applyTwRuntime.getCacheSize();
 
-  const combinedStyle = classes.reduce((acc, className) => {
+export const registerTwUtility = (className, style) => {
+  const version = registerCustomTwUtility(className, style);
+  applyTwRuntime.clearCache();
+  return version;
+};
 
-    // Check for color with opacity (e.g., bg-black/50, text-red-500/75)
+export const registerTwUtilities = utilities => {
+  const version = registerCustomTwUtilities(utilities);
+  applyTwRuntime.clearCache();
+  return version;
+};
 
-    if (className.includes('/') && !className.includes('[')) {
-
-      const colorWithOpacity = parseColorWithOpacity(className);
-
-      if (colorWithOpacity) {
-
-        // Determine if it's background, text, or border color
-
-        if (className.startsWith('bg-')) {
-
-          return { ...acc, backgroundColor: colorWithOpacity };
-
-        } else if (className.startsWith('text-')) {
-
-          return { ...acc, color: colorWithOpacity };
-
-        } else if (className.startsWith('border-')) {
-
-          return { ...acc, borderColor: colorWithOpacity };
-
-        }
-
-      }
-
-    }
-
-    // Check for arbitrary values
-
-    if (className.includes('[') && className.includes(']')) {
-
-      const arbitraryStyle = parseArbitraryValue(className);
-
-      if (arbitraryStyle) {
-
-        return { ...acc, ...arbitraryStyle };
-
-      }
-
-    }
-
-    // Fall back to predefined styles
-
-    if (tw[className]) {
-
-      return { ...acc, ...StyleSheet.flatten(tw[className]) };
-
-    }
-
-    console.warn(`Tailwind class not found: ${className}`);
-
-    return acc;
-
-  }, {});
-
-  return combinedStyle;
-
+export const resetTwUtilities = () => {
+  const version = clearCustomUtilities();
+  applyTwRuntime.clearCache();
+  return version;
 };
 
 /**
@@ -1971,7 +1977,7 @@ export const withClassName = (Component) => {
 
   return ({ className, style, ...props }) => {
 
-    const twStyle = className ? applyTw2(className) : {};
+    const twStyle = className ? applyTw(className) : {};
 
     return <Component style={[twStyle, style]} {...props} />;
 
@@ -2047,7 +2053,7 @@ export const mergeTw = (...classes) => {
 
 export const createAnimatedTw = (classNames, animatedValues = {}) => {
 
-  const baseStyle = applyTw2(classNames);
+  const baseStyle = applyTw(classNames);
 
   return { ...baseStyle, ...animatedValues };
 
@@ -2055,8 +2061,44 @@ export const createAnimatedTw = (classNames, animatedValues = {}) => {
 
 // Export individual style objects if needed
 
+const rem = (value) => {
+  // For web and desktop, use standard CSS rem calculation
+  if (Platform.OS === "web" || Platform.OS === "macos" || Platform.OS === "windows") {
+    return `calc(${value}rem)`;
+  }
+  // For mobile, use pixel values
+  return PixelRatio.get() * BASE_FONT_SIZE * parseFloat(value);
+
+};
+
+
+
+export const roundedLeft = (radius = 8) => ({
+  borderTopLeftRadius: radius,
+  borderBottomLeftRadius: radius,
+});
+
+export const roundedRight = (radius = 8) => ({
+  borderTopRightRadius: radius,
+  borderBottomRightRadius: radius,
+});
+
+export const roundedTop = (radius = 8) => ({
+  borderTopLeftRadius: radius,
+  borderTopRightRadius: radius,
+});
+
+export const roundedBottom = (radius = 8) => ({
+  borderBottomLeftRadius: radius,
+  borderBottomRightRadius: radius,
+});
+
+
+
+
+
 export { tw, colors, spacing };
 
 // Default export
 
-export default applyTw2;
+export default applyTw;

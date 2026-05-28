@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Text } from './text';
 import { Button } from './button';
 import { Checkbox } from './checkbox';

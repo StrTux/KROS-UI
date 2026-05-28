@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, SafeAreaView } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 
 const AlertDialogExample = () => {
   const [visible, setVisible] = useState(false);
@@ -9,7 +9,7 @@ const AlertDialogExample = () => {
     <SafeAreaView style={applyTw('flex-1 bg-black')}>
       {/* Main Content Area */}
       <View style={applyTw('flex-1 justify-center items-center px-4')}>
-        
+
         {/* Show Alert Dialog Button */}
         <TouchableOpacity
           style={applyTw(
@@ -35,12 +35,12 @@ const AlertDialogExample = () => {
           style={applyTw('flex-1 bg-black justify-center items-center')}
           activeOpacity={1}
           onPress={() => setVisible(false)}>
-          
+
           {/* Alert Dialog Box */}
           <View
             style={applyTw('bg-[#111111] w-4/5 rounded-xl p-6 border border-[#2A2A2A]')}
             onStartShouldSetResponder={() => true}>
-            
+
             {/* Title */}
             <Text style={applyTw('text-white text-lg font-semibold mb-2')}>
               Are you absolutely sure?

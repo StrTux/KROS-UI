@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { View, TextInput, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Text } from './text';
 import { Label } from './label';
 

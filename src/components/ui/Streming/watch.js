@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { applyTw } from '../../../style/style';
+import { applyTw } from '../../../style/_elst';
 import { Text } from '../text';
 import { renderFlaticon } from '../../../functions/iconUtils';
 import { useVideoPlayer } from './function/useVideoPlayer';

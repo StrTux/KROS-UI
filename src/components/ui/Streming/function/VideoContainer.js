@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Pressable } from 'react-native';
-import { applyTw } from '../../../../style/style';
-import { Text } from '../../../ui/text';
+import { applyTw } from '../../../../style/_elst';
+import { Text } from '../../text';
 
 /**
  * Video Container Component

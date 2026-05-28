@@ -9,7 +9,7 @@ import {
     Share as RNShare,
     Alert,
 } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 
 // Base Dialog Component
 export const Dialog = ({ visible, onClose, children, transparent = true }) => {

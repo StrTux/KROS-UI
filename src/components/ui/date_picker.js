@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
-import { applyTw } from '../../style/style';
+import { applyTw } from '../../style/_elst';
 import { Text } from './text';
 import { Button } from './button'; // Assuming button exists or I'll use TouchableOpacity
 import { Calendar } from './calendar';
