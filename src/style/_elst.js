@@ -367,7 +367,15 @@ const spacing = scaleObjectValues({
 
 const hexToRgba = (hex, opacity) => {
 
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  let cleanHex = hex.replace('#', '');
+
+  if (cleanHex.length === 3) {
+
+    cleanHex = cleanHex.split('').map(char => char + char).join('');
+
+  }
+
+  const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cleanHex);
 
   if (!result) return hex;
 
@@ -527,15 +535,31 @@ const convertUnit = (value) => {
 
 const parseArbitraryValue = (className) => {
 
-  // Match pattern like "property-[value]"
+  // Match pattern like "property-[value]" or "property-[value]/opacity"
 
-  const match = className.match(/^([a-z-]+)-\[([^\]]+)\]$/);
+  const match = className.match(/^([a-z-]+)-\[([^\]]+)\](?:\/(\d+))?$/);
 
   if (!match) return null;
 
-  const [, property, value] = match;
+  const [, property, value, opacityStr] = match;
 
-  const convertedValue = convertUnit(value);
+  let convertedValue = convertUnit(value);
+
+  if (opacityStr && typeof convertedValue === 'string') {
+
+    const opacity = parseInt(opacityStr, 10);
+
+    if (convertedValue.startsWith('#')) {
+
+      convertedValue = hexToRgba(convertedValue, opacity);
+
+    } else if (convertedValue.startsWith('rgb(')) {
+
+      convertedValue = convertedValue.replace('rgb(', 'rgba(').replace(')', `, ${opacity / 100})`);
+
+    }
+
+  }
 
   // Property mappings for arbitrary values
 
@@ -633,17 +657,19 @@ const parseArbitraryValue = (className) => {
 
     'rounded-bl': { borderBottomLeftRadius: convertedValue },
 
-    // Border width
+    // Border width / color
+    // If value is a number → borderWidth, if string (color) → borderColor
+    // This prevents: "java.lang.String cannot be cast to java.lang.Double" crash
 
-    'border': { borderWidth: convertedValue },
+    'border': typeof convertedValue === 'number' ? { borderWidth: convertedValue } : { borderColor: convertedValue },
 
-    'border-t': { borderTopWidth: convertedValue },
+    'border-t': typeof convertedValue === 'number' ? { borderTopWidth: convertedValue } : { borderTopColor: convertedValue },
 
-    'border-r': { borderRightWidth: convertedValue },
+    'border-r': typeof convertedValue === 'number' ? { borderRightWidth: convertedValue } : { borderRightColor: convertedValue },
 
-    'border-b': { borderBottomWidth: convertedValue },
+    'border-b': typeof convertedValue === 'number' ? { borderBottomWidth: convertedValue } : { borderBottomColor: convertedValue },
 
-    'border-l': { borderLeftWidth: convertedValue },
+    'border-l': typeof convertedValue === 'number' ? { borderLeftWidth: convertedValue } : { borderLeftColor: convertedValue },
 
     // Colors
 
