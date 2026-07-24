@@ -48,6 +48,22 @@ const COMPONENT_MAP = {
   'spinner': UIComponents.SpinnerDemo,
   'streaming': UIComponents.StreamingDemo,
   'menubar': UIComponents.MenubarDemo,
+  'separator': UIComponents.SeparatorDemo,
+  'skeleton': UIComponents.SkeletonDemo,
+  'toggle': UIComponents.ToggleDemo,
+  'toggle-group': UIComponents.ToggleGroupDemo,
+  'tooltip': UIComponents.TooltipDemo,
+  'pagination': UIComponents.PaginationDemo,
+  'scroll-area': UIComponents.ScrollAreaDemo,
+  'slider': UIComponents.SliderDemo,
+  'resizable': UIComponents.ResizableDemo,
+  'select': UIComponents.SelectDemo,
+  'navigation-menu': UIComponents.NavigationMenuDemo,
+  'sheet': UIComponents.SheetDemo,
+  'sidebar': UIComponents.SidebarDemo,
+  'sonner': UIComponents.SonnerDemo,
+  'toast': UIComponents.ToastDemo,
+  'kbd': UIComponents.KbdDemo,
 };
 
 const ComponentDemo = ({ componentId, onNavigate }) => {
