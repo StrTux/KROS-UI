@@ -10,7 +10,9 @@ import {
     Alert,
 } from 'react-native';
 import { applyTw } from '../../style/_elst';
+import { Dimensions } from "react-native";
 
+const { width, height } = Dimensions.get("window");
 // Base Dialog Component
 export const Dialog = ({ visible, onClose, children, transparent = true }) => {
     return (
@@ -36,10 +38,17 @@ export const Dialog = ({ visible, onClose, children, transparent = true }) => {
 // Dialog Content Container
 export const DialogContent = ({ children, className = '' }) => {
     return (
-        <View
-            style={applyTw(
-                `bg-[#1A1A1A] rounded-2xl p-6 w-full max-w-md border border-[#2A2A2A] shadow-2xl ${className}`
-            )}
+       <View
+            style={[
+                applyTw(
+                    `bg-[#1A1A1A] rounded-2xl p-6 border border-[#2A2A2A] ${className}`
+                ),
+                {
+                    width: Math.min(width - 32, 420),
+                    maxHeight: height * 0.85,
+                    alignSelf: "center",
+                },
+            ]}
         >
             {children}
         </View>
